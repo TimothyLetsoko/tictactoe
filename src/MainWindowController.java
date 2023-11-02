@@ -1,15 +1,27 @@
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 
-public class MainWindowController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class MainWindowController implements Initializable {
 
     @FXML
     private Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9;
     @FXML
     private Label lblWinner;
+    @FXML
+    private Label scoreO;
+
+    @FXML
+    private Label scoreX;
     private int counter;
+    private int playerOScore;
+    private int playerXScore;
+
 
     public void getBtn1() {
         setButton(btn1);
@@ -40,7 +52,7 @@ public class MainWindowController {
     }
 
 
-    public void reset() {
+    public void playAgain() {
         btn1.setDisable(false);
         btn2.setDisable(false);
         btn3.setDisable(false);
@@ -63,6 +75,13 @@ public class MainWindowController {
 
         lblWinner.setText("");
     }
+    public void reset(){
+      playAgain();
+      playerXScore = 0;
+      playerOScore = 0;
+      scoreO.setText(String.valueOf(playerOScore));
+      scoreX.setText(String.valueOf(playerXScore));
+    }
     public void setButton(Button button){
         counter++;
         button.setDisable(true);
@@ -82,7 +101,9 @@ public class MainWindowController {
                 btn2.getText().equals("O")&&btn5.getText().equals("O")&&btn8.getText().equals("O")||
                 btn3.getText().equals("O")&&btn5.getText().equals("O")&&btn7.getText().equals("O")
         ){
-                lblWinner.setText("O is the winner");
+                lblWinner.setText("Player O wins!");
+                playerOScore++;
+                scoreO.setText(String.valueOf(playerOScore));
             disableAllButtons();
             }else if(btn1.getText().equals("X")&&btn2.getText().equals("X")&&btn3.getText().equals("X")||
                 btn4.getText().equals("X")&&btn5.getText().equals("X")&&btn6.getText().equals("X")||
@@ -92,7 +113,9 @@ public class MainWindowController {
                 btn1.getText().equals("X")&&btn5.getText().equals("X")&&btn9.getText().equals("X")||
                 btn2.getText().equals("X")&&btn5.getText().equals("X")&&btn8.getText().equals("X")||
                 btn3.getText().equals("X")&&btn5.getText().equals("X")&&btn7.getText().equals("X")){
-                lblWinner.setText("X is the winner");
+                lblWinner.setText("Player X wins!");
+                playerXScore++;
+                scoreX.setText(String.valueOf(playerXScore));
             disableAllButtons();
             }else if(btn1.isDisabled()&&btn2.isDisabled()&&btn3.isDisabled()&&btn4.isDisabled()&&btn5.isDisabled()&&
                 btn6.isDisabled()&&btn7.isDisabled()&&btn8.isDisabled()&&btn9.isDisabled()){
@@ -109,5 +132,11 @@ public class MainWindowController {
         btn7.setDisable(true);
         btn8.setDisable(true);
         btn9.setDisable(true);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        scoreO.setText(String.valueOf(playerOScore));
+        scoreX.setText(String.valueOf(playerXScore));
     }
 }
